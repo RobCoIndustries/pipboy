@@ -4,7 +4,6 @@
   "description": "Experimental pipboy desktop and cli tool for Fallout 4",
   "main": "bootstrap.js",
   "bin": {
-    "pipboyapp": "./bootstrap.js",
     "pipboy": "./cli.js"
   },
   "scripts": {
@@ -31,10 +30,10 @@
   "homepage": "https://github.com/rgbkrk/pipboy#readme",
   "devDependencies": {
     "electron-compilers": "^1.0.1",
-    "electron-packager": "^5.1.1"
+    "electron-packager": "^5.1.1",
+    "electron-prebuilt": "^0.35.1"
   },
   "dependencies": {
     "electron-compile": "^1.0.1",
-    "electron-prebuilt": "^0.35.1"
   }
 }
