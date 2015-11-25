@@ -2,6 +2,8 @@
 
 Experimental Desktop Application for Fallout 4's Pip Boy.
 
+Relies on [pipboylib](https://github.com/rgbkrk/pipboylib).
+
 ## Requirements
 
 * Fallout 4 for PS4 or PC (XBONE not diagnosed, see [pipboylib#27](https://github.com/rgbkrk/pipboylib/issues/27))
