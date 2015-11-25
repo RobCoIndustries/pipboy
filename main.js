@@ -1,15 +1,9 @@
-'use babel';
-
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-
-// Report crashes to the Electron project
-electron.crashReporter.start();
+import app from 'app';
+import BrowserWindow from 'browser-window';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow = null;
+let mainWindow = null;
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
