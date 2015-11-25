@@ -1,6 +1,6 @@
 {
   "name": "pipboy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Experimental pipboy client for Fallout 4",
   "main": "main.js",
   "bin": {
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron main.js",
-		"build": "npm run build:osx",
+    "build": "npm run build:osx",
     "build:osx": "electron-packager ./ PipBoy --platform=darwin --arch=x64 --version=0.35.1"
   },
   "repository": {
