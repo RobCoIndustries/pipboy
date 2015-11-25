@@ -10,8 +10,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron bootstrap.js",
-    "build": "npm run build:osx",
-    "build:osx": "electron-packager ./ PipBoy --platform=darwin --arch=x64 --version=0.35.1"
+    "build": "npm run build:osx && npm run build:win32 && npm run build:linux",
+    "build:osx": "electron-packager ./ PipBoy --platform=darwin --arch=x64 --version=0.35.1",
+    "build:win32": "electron-packager ./ PipBoy --platform=win32 --arch=x64 --version=0.35.1",
+    "build:linux": "electron-packager ./ PipBoy --platform=linux --arch=x64 --version=0.35.1"
   },
   "repository": {
     "type": "git",
