@@ -6,10 +6,19 @@ Experimental Desktop Application for Fallout 4's Pip Boy.
 
 * Fallout 4 for PS4 or PC (XBONE not diagnosed, see [pipboylib#27](https://github.com/rgbkrk/pipboylib/issues/27))
 
-## Installation
+For the moment, you'll need to install this straight from GitHub.
 
-We fully intend to ship releases as a packaged app. If you're a risky sort, you can install using `npm` directly:
+## Development
+
+You'll need node 4.x or greater.
 
 ```
-npm install pipboy
+git clone https://github.com/rgbkrk/pipboy
+npm install
+```
+
+### Running
+
+```
+npm run start
 ```
