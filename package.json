@@ -1,0 +1,34 @@
+{
+  "name": "pipboy",
+  "version": "0.0.0",
+  "description": "Experimental pipboy client for Fallout 4",
+  "main": "main.js",
+  "bin": {
+    "pipboyapp": "./main.js",
+    "pipboy": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js",
+		"build": "npm run build:osx",
+    "build:osx": "electron-packager ./ PipBoy --platform=darwin --arch=x64 --version=0.35.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgbkrk/pipboy.git"
+  },
+  "keywords": [
+    "Fallout4",
+    "pipboy"
+  ],
+  "author": "Kyle Kelley <rgbkrk@gmail.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/rgbkrk/pipboy/issues"
+  },
+  "homepage": "https://github.com/rgbkrk/pipboy#readme",
+  "devDependencies": {
+    "electron-packager": "^5.1.1",
+    "electron-prebuilt": "^0.35.1"
+  }
+}
