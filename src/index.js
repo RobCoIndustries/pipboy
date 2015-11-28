@@ -44,6 +44,10 @@ discover()
         const canvas = document.getElementById('map')
         const context = canvas.getContext('2d')
 
+        const arrow = document.getElementById('arrow')
+        arrow.style.left = '50%'
+        arrow.style.top = '50%'
+
         const localmap = subject
           .filter(x => x.type === channels.LocalMapUpdate)
           .map(x => parseBinaryMap(x.payload))
@@ -111,11 +115,11 @@ discover()
           .map(x => ({
             x: x.X || null,
             y: x.Y || null,
-            // deg: x.Rotation || null // We'll only care about x and y here
+            deg: x.Rotation || null
           }))
-          .distinctUntilChanged()
           .throttle(1000 / 30) // 60 FPS
           .subscribe(pos => {
+            arrow.style.transform = `rotate(${pos.deg}deg)`
             subject.onNext(['RequestLocalMapSnapshot'])
           })
       })
