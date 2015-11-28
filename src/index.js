@@ -31,12 +31,6 @@ const {
   channels
 } = constants
 
-const pipboyColor = [
-  0.1,
-  1.0,
-  0.1
-];
-
 discover()
   .then(server => createSocket(server.info.address))
   .then(socket => {
@@ -49,10 +43,13 @@ discover()
         // Create Canvas for Fallout 4 Map
         const canvas = document.getElementById('map')
         const context = canvas.getContext('2d')
+        let image;
 
         const arrow = document.getElementById('arrow')
         arrow.style.left = '50%'
         arrow.style.top = '50%'
+
+        canvas.style.WebkitFilter = 'hue-rotate(0deg)'
 
         const localmap = subject
           .filter(x => x.type === channels.LocalMapUpdate)
@@ -82,15 +79,17 @@ discover()
               pixels
             } = map
 
-            const image = context.createImageData(width, height)
-            const data = image.data;
+            if (!image) {
+              image = context.createImageData(width, height)
+            }
 
-            for (let i = 0; i < (data.length / 4); i++) {
+            const data = image.data;
+            for (let i = 0; i < pixels.length; i++) {
               const offset = i * 4
-              const val = pixels.readUInt8(i)
-              data[offset] = pipboyColor[0] * val
-              data[offset + 1] = pipboyColor[1] * val
-              data[offset + 2] = pipboyColor[2] * val
+              const val = pixels[i]
+              data[offset] = 0.1 * val
+              data[offset + 1] = val
+              data[offset + 2] = 0.1 * val
               data[offset + 3] = 255
             }
 
@@ -123,7 +122,7 @@ discover()
             y: x.Y || null
           }))
           .distinctUntilChanged()
-          .throttle(1000 / 30) // 60 FPS
+          .throttle(1000 / 30) // 30 FPS
           .subscribe(pos => {
             subject.onNext(['RequestLocalMapSnapshot'])
           })
