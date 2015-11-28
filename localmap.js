@@ -14,7 +14,6 @@ const {
 
 const {
   parseBinaryMap,
-  createObservable,
   parseBinaryDatabase,
   aggregateBundles,
   generateTreeFromDatabase
@@ -87,7 +86,7 @@ discover()
           }))
           .distinctUntilChanged()
           .subscribe(pos => {
-            subject.observer.onNext(['RequestLocalMapSnapshot'])
+            subject.onNext(['RequestLocalMapSnapshot'])
         })
 
         // Render an initial canvas
