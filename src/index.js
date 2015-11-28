@@ -49,15 +49,15 @@ discover()
           .map(x => parseBinaryMap(x.payload))
           .distinctUntilChanged()
 
+        const resize = Observable
+          .fromEvent(window, 'resize')
+          .merge(Observable.just())
+
         localmap
           .first()
-          .combineLatest(Observable.fromEvent(window, 'resize'), x => ({
-            width: x.width,
-            height: x.height
-          }))
-          .map(size => ({
-            x: window.innerWidth / size.width,
-            y: window.innerHeight / size.height
+          .combineLatest(resize, x => ({
+            x: window.innerWidth / x.width,
+            y: window.innerHeight / x.height
           }))
           .subscribe(scale => {
             canvas.style.transform = `scale(${scale.x},${scale.y})`
@@ -114,7 +114,7 @@ discover()
             // deg: x.Rotation || null // We'll only care about x and y here
           }))
           .distinctUntilChanged()
-          .throttle(1000 / 30) // 30 FPS
+          .throttle(1000 / 30) // 60 FPS
           .subscribe(pos => {
             subject.onNext(['RequestLocalMapSnapshot'])
           })
