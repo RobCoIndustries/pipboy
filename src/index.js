@@ -53,8 +53,13 @@ discover()
 
         canvas.style.WebkitFilter = 'hue-rotate(0deg)'
 
+        subject.onNext(['RequestLocalMapSnapshot'])
         const localmap = subject
           .filter(x => x.type === channels.LocalMapUpdate)
+          .throttle(1000 / 30) // 30 FPS hard limit
+          .doOnNext(x => {
+            subject.onNext(['RequestLocalMapSnapshot'])
+          })
           .map(x => parseBinaryMap(x.payload))
           .distinctUntilChanged()
 
@@ -122,18 +127,6 @@ discover()
           .map(x => parseBinaryDatabase(x.payload))
           .scan(aggregateBundles, {})
           .map(x => generateTreeFromDatabase(x))
-
-        database
-          .map(x => x.Map.World.Player)
-          .map(x => ({
-            x: x.X || null,
-            y: x.Y || null
-          }))
-          .distinctUntilChanged()
-          .throttle(1000 / 30) // 30 FPS
-          .subscribe(pos => {
-            subject.onNext(['RequestLocalMapSnapshot'])
-          })
 
         database
           .map(x => x.Map.World.Player)
