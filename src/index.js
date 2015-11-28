@@ -31,6 +31,12 @@ const {
   channels
 } = constants
 
+const pipboyColor = [
+  0.1,
+  1.0,
+  0.1
+];
+
 discover()
   .then(server => createSocket(server.info.address))
   .then(socket => {
@@ -82,9 +88,9 @@ discover()
             for (let i = 0; i < (data.length / 4); i++) {
               const offset = i * 4
               const val = pixels.readUInt8(i)
-              data[offset] = val
-              data[offset + 1] = val
-              data[offset + 2] = val
+              data[offset] = pipboyColor[0] * val
+              data[offset + 1] = pipboyColor[1] * val
+              data[offset + 2] = pipboyColor[2] * val
               data[offset + 3] = 255
             }
 
