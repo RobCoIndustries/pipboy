@@ -120,13 +120,20 @@ discover()
           .map(x => x.Map.World.Player)
           .map(x => ({
             x: x.X || null,
-            y: x.Y || null,
-            deg: x.Rotation || null
+            y: x.Y || null
           }))
+          .distinctUntilChanged()
           .throttle(1000 / 30) // 60 FPS
           .subscribe(pos => {
-            arrow.style.transform = `rotate(${pos.deg}deg)`
             subject.onNext(['RequestLocalMapSnapshot'])
+          })
+
+        database
+          .map(x => x.Map.World.Player)
+          .map(x => x.Rotation)
+          .distinctUntilChanged()
+          .subscribe(rotation => {
+            arrow.style.transform = `rotate(${rotation}deg)`
           })
       })
       .catch(err => {
