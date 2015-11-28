@@ -43,7 +43,9 @@ discover()
         // Create Canvas for Fallout 4 Map
         const canvas = document.getElementById('map')
         const context = canvas.getContext('2d')
+
         let image;
+        let empty;
 
         const arrow = document.getElementById('arrow')
         arrow.style.left = '50%'
@@ -72,6 +74,12 @@ discover()
           })
 
         localmap
+          .filter(map => {
+            if (!empty) {
+              empty = new Buffer(map.pixels.length)
+            }
+            return !map.pixels.equals(empty)
+          })
           .map(map => {
             const {
               width,
