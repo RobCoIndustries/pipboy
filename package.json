@@ -2,7 +2,7 @@
   "name": "pipboy",
   "version": "0.0.6",
   "description": "Experimental pipboy desktop and cli tool for Fallout 4",
-  "main": "bootstrap.js",
+  "main": "main.js",
   "bin": {
     "pipboy": "./cli.js"
   },
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "pipboylib": "^1.0.0",
+    "react": "^0.14.3",
     "rx": "^4.0.7"
   }
 }
