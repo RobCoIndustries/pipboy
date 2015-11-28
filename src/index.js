@@ -53,15 +53,18 @@ discover()
 
         canvas.style.WebkitFilter = 'hue-rotate(0deg)'
 
+        // Parse the payload
         const localmap = subject
           .filter(x => x.type === channels.LocalMapUpdate)
           .map(x => parseBinaryMap(x.payload))
           .distinctUntilChanged()
 
+        // Create observable that emits on resize and immediately once as well
         const resize = Observable
           .fromEvent(window, 'resize')
           .merge(Observable.just())
 
+        // Update the canvas scale to fit the window
         localmap
           .first()
           .combineLatest(resize, x => ({
@@ -73,6 +76,7 @@ discover()
             canvas.style.transformOrigin = '0 0'
           })
 
+        // Render the local map to a canvas through an ImageData object
         localmap
           .filter(map => {
             if (!empty) {
@@ -117,12 +121,14 @@ discover()
             context.putImageData(image, 0, 0)
           })
 
+        // Parse the database payload
         const database = subject
           .filter(x => x.type === channels.DatabaseUpdate)
           .map(x => parseBinaryDatabase(x.payload))
           .scan(aggregateBundles, {})
           .map(x => generateTreeFromDatabase(x))
 
+        // After generating the new localmap request the next one when the position changes
         database
           .map(x => x.Map.World.Player)
           .map(x => ({
@@ -130,14 +136,15 @@ discover()
             y: x.Y || null
           }))
           .distinctUntilChanged()
-          .throttle(1000 / 30) // 30 FPS
-          .subscribe(pos => {
+          .window(localmap)
+          .flatMap(x => x.first())
+          .subscribe(() => {
             subject.onNext(['RequestLocalMapSnapshot'])
           })
 
+        // Update the player's orientation on screen
         database
-          .map(x => x.Map.World.Player)
-          .map(x => x.Rotation)
+          .map(x => x.Map.World.Player.Rotation)
           .distinctUntilChanged()
           .subscribe(rotation => {
             arrow.style.transform = `rotate(${rotation}deg)`
