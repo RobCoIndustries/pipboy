@@ -46,6 +46,7 @@ discover()
 
         let image;
         let empty;
+        let prev;
 
         const arrow = document.getElementById('arrow')
         arrow.style.left = '50%'
@@ -98,14 +99,17 @@ discover()
 
             const data = image.data;
             for (let i = 0; i < pixels.length; i++) {
-              const offset = i * 4
               const val = pixels[i]
-              data[offset] = 0.1 * val
-              data[offset + 1] = val
-              data[offset + 2] = 0.1 * val
-              data[offset + 3] = 255
+              if (!prev || val !== prev[i]) {
+                const offset = i * 4
+                data[offset] = 0.1 * val
+                data[offset + 1] = val
+                data[offset + 2] = 0.1 * val
+                data[offset + 3] = 255
+              }
             }
 
+            prev = pixels
             return {
               image,
               map
