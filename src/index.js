@@ -98,13 +98,14 @@ discover()
             }
 
             const data = image.data;
+
             for (let i = 0; i < pixels.length; i++) {
               const val = pixels[i]
               if (!prev || val !== prev[i]) {
                 const offset = i * 4
-                data[offset] = 0.1 * val
+                data[offset] = val
                 data[offset + 1] = val
-                data[offset + 2] = 0.1 * val
+                data[offset + 2] = val
                 data[offset + 3] = 255
               }
             }
@@ -123,7 +124,12 @@ discover()
 
             canvas.height = map.height
             canvas.width = map.width
+
+            context.globalCompositeOperation = 'source-over'
             context.putImageData(image, 0, 0)
+            context.globalCompositeOperation = 'multiply'
+            context.fillStyle = 'rgb(25, 255, 25)'
+            context.fillRect(0, 0, map.width, map.height)
           })
 
         const database = subject
