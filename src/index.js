@@ -31,9 +31,9 @@ const {
   channels
 } = constants
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var JSONTree = require('react-json-tree');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import JSONTree from 'react-json-tree';
 
 const theme = {
   scheme: 'sogreen',
