@@ -1,6 +1,6 @@
 {
   "name": "pipboy",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Experimental pipboy desktop and cli tool for Fallout 4",
   "main": "main.js",
   "bin": {
