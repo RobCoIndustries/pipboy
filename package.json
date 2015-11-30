@@ -29,18 +29,19 @@
   },
   "homepage": "https://github.com/rgbkrk/pipboy#readme",
   "devDependencies": {
-    "electron-compilers": "^1.0.1",
     "electron-packager": "^5.1.1",
     "electron-prebuilt": "^0.35.1"
   },
   "dependencies": {
+    "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
-    "electron-compile": "^1.0.1",
     "history": "^1.13.1",
     "pipboylib": "^1.0.0",
+    "radium": "^0.15.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.0",
-    "rx": "^4.0.7"
+    "rx": "^4.0.7",
+    "webpack": "^1.12.9"
   }
 }
