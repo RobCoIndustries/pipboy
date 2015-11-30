@@ -4,10 +4,9 @@ var path = require('path')
 
 module.exports = {
   watch: true,
-  entry: {
-    node: 'app/main.js',
-    browser: 'www/index.jsx'
-  },
+  entry: [
+    'src/index.jsx'
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
@@ -20,7 +19,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: '[name].js'
+    path: path.join(__dirname, 'app'),
+    filename: 'bundle.js'
   }
-};
+}

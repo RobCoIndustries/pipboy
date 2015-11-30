@@ -35,6 +35,7 @@
   "dependencies": {
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
+    "gulp": "^3.9.0",
     "history": "^1.13.1",
     "pipboylib": "^1.0.0",
     "radium": "^0.15.3",
