@@ -5,7 +5,7 @@ var path = require('path')
 module.exports = {
   watch: true,
   entry: [
-    'src/index.jsx'
+    './src/index.jsx'
   ],
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -14,7 +14,8 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel']
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel'
       }
     ]
   },
