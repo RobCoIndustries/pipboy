@@ -3,6 +3,9 @@
     "es2015",
     "react"
   ],
+  "plugins": [
+    "syntax-decorators"
+  ],
   "ignore": [
     "/node_modules/"
   ]
