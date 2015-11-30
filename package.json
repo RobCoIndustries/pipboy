@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rgbkrk/pipboy.git"
+    "url": "git+https://github.com/RobCoIndustries/pipboy.git"
   },
   "keywords": [
     "Fallout4",
@@ -25,9 +25,9 @@
   "author": "Kyle Kelley <rgbkrk@gmail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/rgbkrk/pipboy/issues"
+    "url": "https://github.com/RobCoIndustries/pipboy/issues"
   },
-  "homepage": "https://github.com/rgbkrk/pipboy#readme",
+  "homepage": "https://github.com/RobCoIndustries/pipboy#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
     "electron-compile": "^1.0.1",
