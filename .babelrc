@@ -4,7 +4,8 @@
     "react"
   ],
   "plugins": [
-    "syntax-decorators"
+    "syntax-decorators",
+    "transform-class-properties"
   ],
   "ignore": [
     "/node_modules/"
