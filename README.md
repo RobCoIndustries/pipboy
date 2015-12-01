@@ -1,5 +1,7 @@
 # pipboy
 
+[![Join the chat at https://gitter.im/RobCoIndustries/pipboy](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RobCoIndustries/pipboy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Experimental Desktop Application for Fallout 4's Pip Boy.
 
 ![localmap view within the pipboy app](https://cloud.githubusercontent.com/assets/2041385/11451663/11faf260-95ce-11e5-90af-5f0eb27602e2.gif)
