@@ -14,4 +14,4 @@ render((
       <Route path="map" component={Map}/>
     </Route>
   </Router>
-), document.body)
+), document.getElementById('app'))

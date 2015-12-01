@@ -1,6 +1,7 @@
 /*eslint-disable */
 var webpack = require('webpack')
 var path = require('path')
+var fs = require('fs')
 
 module.exports = {
   watch: true,
@@ -24,6 +25,9 @@ module.exports = {
       }
     ]
   },
+  externals: fs.readdirSync("node_modules").map(function(module) {
+    return "commonjs " + module
+  }),
   output: {
     path: path.join(__dirname, 'app'),
     filename: 'bundle.js'

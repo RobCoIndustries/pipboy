@@ -8,6 +8,7 @@ export default class Map extends React.Component {
   render() {
     return (
       <div style={styles.map}>
+        Test
       </div>
     )
   }

@@ -5,6 +5,7 @@
   ],
   "plugins": [
     "syntax-decorators",
+    "syntax-class-properties",
     "transform-class-properties"
   ],
   "ignore": [

@@ -31,12 +31,16 @@ import styles from './styles'
 
 @Radium
 export default class App extends React.Component {
-  state = {
-    connected: false
+  constructor(props) {
+    super(props)
   }
 
-  childContextTypes = {
+  static childContextTypes = {
     sendCommand: React.PropTypes.func.isRequired
+  }
+
+  state = {
+    connected: false
   }
 
   getChildContext = () => ({
@@ -58,6 +62,7 @@ export default class App extends React.Component {
         this.cancelHeartbeat = sendPeriodicHeartbeat(socket)
         this.connection = createConnectionSubject(socket)
         this.subscription = this.connection.subscribe(x => {
+          console.log(x)
           dispatcher.dispatch({
             type: toType(x.type),
             payload: x.payload
@@ -71,12 +76,20 @@ export default class App extends React.Component {
           connected: true
         })
       })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   render() {
     // TODO: Implement a loading screen
-    if (!this.state.connection)
-      return null
+    if (!this.state.connected) {
+      return (
+        <span>
+          Connecting...
+        </span>
+      )
+    }
 
     return (
       <div style={styles.app}>

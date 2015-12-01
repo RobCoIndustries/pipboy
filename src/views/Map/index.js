@@ -5,6 +5,7 @@ import LocalMap from '../../components/LocalMap'
 
 import styles from './styles'
 
+@Radium
 export default class Map extends React.Component {
   render() {
     return (
