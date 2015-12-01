@@ -28,3 +28,6 @@ node_modules
 
 # Built versions of the PipBoy app
 PipBoy-*
+
+# Compiled js code
+app
