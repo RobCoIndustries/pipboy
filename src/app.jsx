@@ -29,6 +29,14 @@ import {
 import dispatcher from './dispatcher'
 import styles from './styles'
 
+const styles = {
+  app: {
+    display: 'block',
+    height: '100%',
+    width: '100%'
+  }
+}
+
 @Radium
 export default class App extends React.Component {
   constructor(props) {
