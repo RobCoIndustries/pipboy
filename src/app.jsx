@@ -80,6 +80,9 @@ export default class App extends React.Component {
         this.setState({
           connected: true
         })
+
+        // Get initial LocalMap state
+        this.sendCommand('RequestLocalMapSnapshot')
       })
       .catch(err => {
         throw err

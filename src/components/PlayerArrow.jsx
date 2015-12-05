@@ -2,7 +2,7 @@ import React from 'react'
 
 const styles = {
   arrow: {
-    position: 'fixed',
+    position: 'absolute',
     display: 'block',
     width: 0,
     height: 0,
