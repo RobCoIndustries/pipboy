@@ -27,7 +27,6 @@ import {
 } from './constants/server_types'
 
 import dispatcher from './dispatcher'
-import styles from './styles'
 
 const styles = {
   app: {
