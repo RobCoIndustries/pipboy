@@ -1,12 +1,8 @@
 {
-  "presets": [
-    "es2015",
-    "react"
-  ],
-  "plugins": [
-    "syntax-decorators",
-    "syntax-class-properties",
-    "transform-class-properties"
+  "optional": [
+    "runtime",
+    "es7.classProperties",
+    "es7.decorators"
   ],
   "ignore": [
     "/node_modules/"
