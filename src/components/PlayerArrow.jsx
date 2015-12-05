@@ -40,13 +40,11 @@ export default class PlayerArrow extends React.Component {
 
   render() {
     return (
-      <div styles={[
-        styles.arrow, {
-          left: `${this.props.x * 100}%`,
-          top: `${this.props.y * 100}%`,
-          transform: `rotate(${this.props.orientation}deg)`
-        }
-      ]}>
+      <div style={Object.assign({}, styles.arrow, {
+        left: `${this.props.x * 100}%`,
+        top: `${this.props.y * 100}%`,
+        transform: `rotate(${this.props.orientation}deg)`
+      })}>
         <div style={styles.inner}/>
       </div>
     )

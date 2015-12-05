@@ -56,8 +56,7 @@ export default class App extends React.Component {
 
   sendCommand = (type, ...args) => {
     if (this.connection) {
-      invariant(typeof type === 'number', 'Expected number for type.')
-      this.connection.onNext(arguments)
+      this.connection.onNext([type, ...args])
     }
   }
 
@@ -69,7 +68,6 @@ export default class App extends React.Component {
         this.cancelHeartbeat = sendPeriodicHeartbeat(socket)
         this.connection = createConnectionSubject(socket)
         this.subscription = this.connection.subscribe(x => {
-          console.log(x)
           dispatcher.dispatch({
             type: toType(x.type),
             payload: x.payload
@@ -84,7 +82,7 @@ export default class App extends React.Component {
         })
       })
       .catch(err => {
-        console.error(err)
+        throw err
       })
   }
 
