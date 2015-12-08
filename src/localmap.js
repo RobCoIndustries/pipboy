@@ -1,27 +1,12 @@
 import {
-  connection,
   decoding,
   status,
   constants
 } from 'pipboylib';
 
 const {
-  discover,
-  createSocket,
-  sendPeriodicHeartbeat,
-  createConnectionSubject
-} = connection
-
-const {
-  parseBinaryMap,
-  parseBinaryDatabase,
-  aggregateBundles,
-  generateTreeFromDatabase
+  parseBinaryMap
 } = decoding
-
-const {
-  connected
-} = status
 
 const {
   channels
