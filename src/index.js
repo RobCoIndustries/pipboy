@@ -33,7 +33,11 @@ import {
 
 import {
   createLocalMap
-} from './localmap'
+} from './localmap';
+
+import {
+  createInspector
+} from './inspector';
 
 export default function main() {
   // TODO: List available servers rather than picking the first
@@ -47,7 +51,8 @@ export default function main() {
       connected(subject)
         .then(handshake => {
           let pipboy = createPipBoy(subject);
-          createLocalMap(pipboy);
+          //createLocalMap(pipboy);
+          createInspector(pipboy, document.querySelector("#inspector"));
           window.pipboy = pipboy;
         })
         .catch(err => {

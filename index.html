@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>PipBoy</title>
+    <link rel="stylesheet" href="css/json-inspector.css">
+    <link rel="stylesheet" href="css/localmap.css">
     <style>
       html, body {
         margin: 0;
@@ -10,43 +12,11 @@
         height: 100%;
         overflow: hidden;
       }
-      #map {
-        background: #000;
-      }
-      #arrow {
-        position: fixed;
-        display: block;
-        width: 0;
-        height: 0;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 36px solid #000;
-        margin-left: -15px;
-        margin-top: -18px;
-        animation: fade 1s ease-in alternate infinite;
-      }
-      @keyframes fade {
-        from {
-          opacity: .5;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      #arrow .inner {
-        position: absolute;
-        top: 4px;
-        left: -12px;
-        display: block;
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 30px solid #4aff4a;
-      }
     </style>
   </head>
   <body>
+    <div id="inspector">
+    </div>
     <canvas id="map"></canvas>
     <div id="arrow">
       <div class="inner"></div>

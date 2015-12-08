@@ -38,6 +38,7 @@
   "dependencies": {
     "pipboylib": "^1.1.1",
     "react": "^0.14.3",
+    "react-dom": "^0.14.3",
     "rx": "^4.0.7"
   }
 }
