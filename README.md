@@ -17,7 +17,7 @@ For the moment, you'll need to install this straight from GitHub.
 You'll need node 4.x or greater.
 
 ```
-git clone https://github.com/rgbkrk/pipboy
+git clone https://github.com/RobCoIndustries/pipboy.git
 npm install
 ```
 
