@@ -8,9 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Tests are cool, we should do those.\"",
-    "compile": "gulp",
     "start": "electron main.js",
-    "prebuild": "npm run compile",
     "build": "npm run build:osx && npm run build:win32 && npm run build:linux",
     "build:osx": "electron-packager ./ PipBoy --platform=darwin --arch=x64 --version=0.35.1",
     "build:win32": "electron-packager ./ PipBoy --platform=win32 --arch=x64 --version=0.35.1",
@@ -31,14 +29,10 @@
   },
   "homepage": "https://github.com/rgbkrk/pipboy#readme",
   "devDependencies": {
-    "babel-core": "^5.8.34",
-    "babel-loader": "^5.4.0",
+    "babel": "^5.8.34",
     "babel-runtime": "^5.8.34",
     "electron-packager": "^5.1.1",
-    "electron-prebuilt": "^0.35.1",
-    "gulp": "^3.9.0",
-    "gulp-util": "^3.0.7",
-    "webpack": "^1.12.9"
+    "electron-prebuilt": "^0.35.1"
   },
   "dependencies": {
     "color": "^0.10.1",
@@ -50,7 +44,6 @@
     "radium": "^0.15.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-material-icons": "^1.0.1",
     "react-router": "^1.0.0",
     "react-tap-event-plugin": "^0.2.1",
     "rx": "^4.0.7"
