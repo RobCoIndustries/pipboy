@@ -35,10 +35,6 @@ const styles = {
     display: 'block',
     height: '100%',
     width: '100%'
-  },
-  'pure-g':  {
-    display: 'inline-block',
-    'letter-spacing': 'reset'
   }
 }
 
