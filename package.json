@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "fluorine-lib": "^0.2.0",
-    "history": "^1.15.0",
     "pipboylib": "^1.1.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
