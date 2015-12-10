@@ -40,6 +40,12 @@ const styles = {
     return !map.pixels.equals(new Buffer(map.pixels.length))
   }),
   'map')
+@withStore(dispatcher
+  .reduce(Database)
+  .map(x => generateTreeFromDatabase(x))
+  .map(x => x && x.Status.EffectColor)
+  .distinctUntilChanged(),
+  'effectColor')
 export default class LocalMap extends React.Component {
   static contextTypes = {
     sendCommand: React.PropTypes.func.isRequired
@@ -55,18 +61,29 @@ export default class LocalMap extends React.Component {
   }
 
   componentDidMount() {
-    this.updateMap(this.props.map)
+    this.updateMap(this.props.map, this.props.effectColor)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.map !== this.props.map) {
-      this.updateMap(nextProps.map)
+      this.updateMap(nextProps.map, this.props.effectColor)
     }
   }
 
-  updateMap = map => {
+  updateMap = (map, effectColor) => {
     // Get next LocalMap
     this.context.sendCommand('RequestLocalMapSnapshot')
+
+    if (!effectColor) {
+      effectColor = [0.07999999821186066, 1, 0.09000000357627869]
+    }
+    effectColor = effectColor.map(x => Math.round(x*255) )
+
+    const redLevel = effectColor[0];
+    const greenLevel = effectColor[1];
+    const blueLevel = effectColor[2];
+
+    const fillStyle = `rgb(${redLevel},${greenLevel},${blueLevel})`
 
     const {
       width,
@@ -90,7 +107,8 @@ export default class LocalMap extends React.Component {
     context.globalCompositeOperation = 'source-over'
     context.putImageData(image, 0, 0)
     context.globalCompositeOperation = 'multiply'
-    context.fillStyle = 'rgb(25, 255, 25)'
+
+    context.fillStyle = fillStyle;
     context.fillRect(0, 0, width, height)
   }
 
