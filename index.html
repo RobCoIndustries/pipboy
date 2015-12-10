@@ -3,26 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <title>PipBoy</title>
-    <link rel="stylesheet" href="css/json-inspector.css">
-    <link rel="stylesheet" href="css/localmap.css">
-    <style>
-      html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-    </style>
+    <link rel="stylesheet" href="reset.css"/>
   </head>
   <body>
-    <div id="inspector">
-    </div>
-    <canvas id="map"></canvas>
-    <div id="arrow">
-      <div class="inner"></div>
-    </div>
+    <div id="app"></div>
     <script>
-      require('./src/index')();
+      require('./src/index.jsx')
     </script>
   </body>
 </html>
