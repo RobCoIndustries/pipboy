@@ -38,12 +38,22 @@ const styles = {
   .map(x => parseBinaryMap(x.payload))
   .filter(map => {
     return !map.pixels.equals(new Buffer(map.pixels.length))
-  }),
+  })
+  .distinctUntilChanged(),
   'map')
 @withStore(dispatcher
   .reduce(Database)
   .map(x => generateTreeFromDatabase(x))
   .map(x => x && x.Status.EffectColor)
+  .map(effectColor => {
+    let effectColors = effectColor.map(x => Math.round(x*255) )
+    let effect = {
+      red: effectColors[0],
+      green: effectColors[1],
+      blue: effectColors[2]
+    }
+    return `rgb(${effect.red},${effect.green},${effect.blue})`
+  })
   .distinctUntilChanged(),
   'effectColor')
 export default class LocalMap extends React.Component {
@@ -73,17 +83,7 @@ export default class LocalMap extends React.Component {
   updateMap = (map, effectColor) => {
     // Get next LocalMap
     this.context.sendCommand('RequestLocalMapSnapshot')
-
-    if (!effectColor) {
-      effectColor = [0.07999999821186066, 1, 0.09000000357627869]
-    }
-    effectColor = effectColor.map(x => Math.round(x*255) )
-
-    const redLevel = effectColor[0];
-    const greenLevel = effectColor[1];
-    const blueLevel = effectColor[2];
-
-    const fillStyle = `rgb(${redLevel},${greenLevel},${blueLevel})`
+    const fillStyle = effectColor;
 
     const {
       width,
@@ -123,7 +123,8 @@ export default class LocalMap extends React.Component {
         <PlayerArrow
           orientation={this.props.orientation || 0}
           x={0.5}
-          y={0.5}/>
+          y={0.5}
+          color={this.props.effectColor} />
       </div>
     )
   }
