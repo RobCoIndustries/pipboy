@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Router, Route, IndexRoute } from 'react-router'
+import { Router, Route, IndexRedirect } from 'react-router'
 
 import App from './app.jsx'
 

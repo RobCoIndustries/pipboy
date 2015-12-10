@@ -35,6 +35,10 @@ const styles = {
     display: 'block',
     height: '100%',
     width: '100%'
+  },
+  'pure-g':  {
+    display: 'inline-block',
+    'letter-spacing': 'reset'
   }
 }
 
@@ -93,13 +97,19 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul className="nav">
-          <li><Link to="/">Main</Link></li>
-          <li><Link to="/map">Map</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-        {this.props.children}
+      <div className="pure-g">
+        <div className="pure-u">
+          <div className="pure-menu custom-restricted-width">
+            <ul className="pure-menu-list">
+              <li className="pure-menu-item"><Link className="pure-menu-link" to="/">Main</Link></li>
+              <li className="pure-menu-item"><Link className="pure-menu-link" to="/map">Map</Link></li>
+              <li className="pure-menu-item"><Link className="pure-menu-link" to="/about">About</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="pure-u">
+          {this.props.children}
+        </div>
       </div>
     )
   }
