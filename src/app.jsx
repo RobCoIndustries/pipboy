@@ -2,6 +2,8 @@ import React from 'react'
 import Radium from 'radium'
 import invariant from 'invariant'
 
+import { Link } from 'react-router'
+
 import {
   Subject
 } from 'rx'
@@ -90,20 +92,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    // TODO: Implement a loading screen
-    if (!this.state.connected) {
-      return (
-        <span>
-          Connecting...
-        </span>
-      )
-    }
-
     return (
-      <div style={styles.app}>
-        <div>
-          {this.props.children}
-        </div>
+      <div>
+        <ul className="nav">
+          <li><Link to="/">Main</Link></li>
+          <li><Link to="/map">Map</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+        {this.props.children}
       </div>
     )
   }
