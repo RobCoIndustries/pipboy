@@ -35,7 +35,10 @@ const styles = {
   'orientation')
 @withStore(dispatcher
   .filter(x => x && x.type === SERVER_LOCALMAP_UPDATE)
-  .map(x => parseBinaryMap(x.payload)),
+  .map(x => parseBinaryMap(x.payload))
+  .filter(map => {
+    return !map.pixels.equals(new Buffer(map.pixels.length))
+  }),
   'map')
 export default class LocalMap extends React.Component {
   static contextTypes = {
