@@ -101,7 +101,6 @@ export default class App extends React.Component {
         <div className="pure-u">
           <div className="pure-menu custom-restricted-width">
             <ul className="pure-menu-list">
-              <li className="pure-menu-item"><Link className="pure-menu-link" to="/">Main</Link></li>
               <li className="pure-menu-item"><Link className="pure-menu-link" to="/map">Map</Link></li>
               <li className="pure-menu-item"><Link className="pure-menu-link" to="/about">About</Link></li>
             </ul>
