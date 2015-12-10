@@ -1,11 +1,8 @@
 {
   "name": "pipboy",
   "version": "0.0.8",
-  "description": "Experimental pipboy desktop and cli tool for Fallout 4",
+  "description": "Experimental pipboy desktop app for Fallout 4",
   "main": "main.js",
-  "bin": {
-    "pipboy": "./cli.js"
-  },
   "scripts": {
     "test": "echo \"Tests are cool, we should do those.\"",
     "start": "electron main.js",
@@ -36,8 +33,13 @@
     "electron-prebuilt": "^0.35.1"
   },
   "dependencies": {
+    "fluorine-lib": "^0.2.0",
+    "history": "1.13.1",
     "pipboylib": "^1.1.1",
+    "radium": "^0.15.3",
     "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-router": "^1.0.2",
     "rx": "^4.0.7"
   }
 }
