@@ -38,8 +38,24 @@ const styles = {
   .map(x => parseBinaryMap(x.payload))
   .filter(map => {
     return !map.pixels.equals(new Buffer(map.pixels.length))
-  }),
+  })
+  .distinctUntilChanged(),
   'map')
+@withStore(dispatcher
+  .reduce(Database)
+  .map(x => generateTreeFromDatabase(x))
+  .map(x => x && x.Status.EffectColor)
+  .map(effectColor => {
+    let effectColors = effectColor.map(x => Math.round(x*255) )
+    let effect = {
+      red: effectColors[0],
+      green: effectColors[1],
+      blue: effectColors[2]
+    }
+    return `rgb(${effect.red},${effect.green},${effect.blue})`
+  })
+  .distinctUntilChanged(),
+  'effectColor')
 export default class LocalMap extends React.Component {
   static contextTypes = {
     sendCommand: React.PropTypes.func.isRequired
@@ -55,18 +71,19 @@ export default class LocalMap extends React.Component {
   }
 
   componentDidMount() {
-    this.updateMap(this.props.map)
+    this.updateMap(this.props.map, this.props.effectColor)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.map !== this.props.map) {
-      this.updateMap(nextProps.map)
+      this.updateMap(nextProps.map, this.props.effectColor)
     }
   }
 
-  updateMap = map => {
+  updateMap = (map, effectColor) => {
     // Get next LocalMap
     this.context.sendCommand('RequestLocalMapSnapshot')
+    const fillStyle = effectColor;
 
     const {
       width,
@@ -90,7 +107,8 @@ export default class LocalMap extends React.Component {
     context.globalCompositeOperation = 'source-over'
     context.putImageData(image, 0, 0)
     context.globalCompositeOperation = 'multiply'
-    context.fillStyle = 'rgb(25, 255, 25)'
+
+    context.fillStyle = fillStyle;
     context.fillRect(0, 0, width, height)
   }
 
@@ -105,7 +123,8 @@ export default class LocalMap extends React.Component {
         <PlayerArrow
           orientation={this.props.orientation || 0}
           x={0.5}
-          y={0.5}/>
+          y={0.5}
+          color={this.props.effectColor} />
       </div>
     )
   }
