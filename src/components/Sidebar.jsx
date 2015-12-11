@@ -38,8 +38,26 @@ export default class Sidebar extends React.Component {
       },
       sidebar: {
         borderRight: `3px solid ${this.props.color}`,
+        paddingRight: 10,
         height: '100%',
         width: '100%'
+      },
+      li: {
+        width: '100%',
+        marginBottom: 5,
+        textTransform: 'uppercase'
+      },
+      item: {
+        base: {
+          width: '100%',
+          padding: 5,
+          background: 'none',
+          color: this.props.color
+        },
+        active: {
+          background: this.props.color,
+          color: '#000'
+        }
       }
     }
 
@@ -47,8 +65,23 @@ export default class Sidebar extends React.Component {
       <div style={styles.container}>
         <div style={styles.sidebar}>
           <ul>
-            <li><Link to="/map">Map</Link></li>
-            <li><Link to="/about">About</Link></li>
+            <li style={styles.li}>
+              <Link
+                to="/map"
+                activeStyle={styles.item.active}
+                style={styles.item.base}>
+                Map
+              </Link>
+            </li>
+
+            <li style={styles.li}>
+              <Link
+                to="/about"
+                activeStyle={styles.item.active}
+                style={styles.item.base}>
+                About
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
