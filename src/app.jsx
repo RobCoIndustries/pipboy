@@ -1,6 +1,13 @@
 import React from 'react'
+import { render } from 'react-dom'
+
+import { Router, Route, IndexRoute } from 'react-router'
+
 import Radium from 'radium'
 import invariant from 'invariant'
+
+// Views
+import Map from './views/Map'
 
 import {
   Subject
@@ -108,3 +115,12 @@ export default class App extends React.Component {
     )
   }
 }
+
+render((
+  <Router>
+    <Route path="/" component={App}>
+      <Route path="map" component={Map}/>
+      <IndexRoute component={Map}/>
+    </Route>
+  </Router>
+), document.getElementById('app'))
