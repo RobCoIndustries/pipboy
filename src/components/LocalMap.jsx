@@ -24,7 +24,9 @@ const styles = {
     overflow: 'hidden'
   },
   canvas: {
-    background: '#000'
+    background: '#000',
+    height: '100%',
+    width: '100%'
   }
 }
 

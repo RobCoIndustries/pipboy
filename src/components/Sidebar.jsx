@@ -31,12 +31,15 @@ export default class Sidebar extends React.Component {
   render() {
     const styles = {
       container: {
+        height: '100%',
         width: 200,
         padding: 10,
         color: this.props.color
       },
       sidebar: {
-        borderRight: `3px solid ${this.props.color}`
+        borderRight: `3px solid ${this.props.color}`,
+        height: '100%',
+        width: '100%'
       }
     }
 
