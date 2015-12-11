@@ -18,9 +18,9 @@ import Database from '../stores/Database'
 const styles = {
   localMap: {
     display: 'block',
+    position: 'relative',
     height: '100%',
     width: '100%',
-    overflow: 'hidden'
   },
   canvas: {
     background: '#000'
