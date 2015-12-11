@@ -1,6 +1,13 @@
 import React from 'react'
+import { render } from 'react-dom'
+
+import { PropTypes, Router, Route, IndexRoute } from 'react-router'
+
 import Radium from 'radium'
 import invariant from 'invariant'
+
+// Views
+import Map from './views/Map'
 
 import {
   Subject
@@ -46,10 +53,6 @@ export default class App extends React.Component {
     sendCommand: React.PropTypes.func.isRequired
   }
 
-  state = {
-    connected: false
-  }
-
   getChildContext = () => ({
     sendCommand: this.sendCommand
   })
@@ -77,9 +80,7 @@ export default class App extends React.Component {
         return connected(this.connection)
       })
       .then(() => {
-        this.setState({
-          connected: true
-        })
+        this.props.history.pushState(null, "map")
 
         // Get initial LocalMap state
         this.sendCommand('RequestLocalMapSnapshot')
@@ -90,15 +91,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    // TODO: Implement a loading screen
-    if (!this.state.connected) {
-      return (
-        <span>
-          Connecting...
-        </span>
-      )
-    }
-
     return (
       <div style={styles.app}>
         <div>
@@ -108,3 +100,24 @@ export default class App extends React.Component {
     )
   }
 }
+
+App.contextTypes = { history: PropTypes.history }
+
+class ServerSelection extends React.Component {
+  render() {
+    return (
+      <span>
+        Connecting to first found server...
+      </span>
+    )
+  }
+}
+
+render((
+  <Router>
+    <Route path="/" component={App}>
+      <IndexRoute component={ServerSelection}/>
+      <Route path="map" component={Map}/>
+    </Route>
+  </Router>
+), document.getElementById('app'))
