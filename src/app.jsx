@@ -1,5 +1,4 @@
 import React from 'react'
-import Radium from 'radium'
 import invariant from 'invariant'
 
 import { Link } from 'react-router'
@@ -32,13 +31,20 @@ import dispatcher from './dispatcher'
 
 const styles = {
   app: {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'no-wrap',
+    alignItems: 'stretch',
     height: '100%',
     width: '100%'
+  },
+  content: {
+    display: 'block',
+    flexGrow: '1',
+    padding: 10
   }
 }
 
-@Radium
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -93,16 +99,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="pure-g">
-        <div className="pure-u">
+      <div style={styles.app}>
           <div className="pure-menu custom-restricted-width">
             <ul className="pure-menu-list">
               <li className="pure-menu-item"><Link className="pure-menu-link" to="/map">Map</Link></li>
               <li className="pure-menu-item"><Link className="pure-menu-link" to="/about">About</Link></li>
             </ul>
           </div>
-        </div>
-        <div className="pure-u">
+        <div style={styles.content}>
           {this.props.children}
         </div>
       </div>
