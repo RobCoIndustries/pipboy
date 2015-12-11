@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStore } from 'fluorine-lib'
+import { Link } from 'react-router'
 
 import {
   decoding
@@ -42,6 +43,8 @@ export default class Sidebar extends React.Component {
     return (
       <div style={styles.container}>
         <div style={styles.sidebar}>
+            <Link to="/map">Map</Link>
+            <Link to="/about">About</Link>
         </div>
       </div>
     )
