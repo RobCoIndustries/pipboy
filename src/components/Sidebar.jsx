@@ -43,8 +43,10 @@ export default class Sidebar extends React.Component {
     return (
       <div style={styles.container}>
         <div style={styles.sidebar}>
-            <Link to="/map">Map</Link>
-            <Link to="/about">About</Link>
+          <ul>
+            <li><Link to="/map">Map</Link></li>
+            <li><Link to="/about">About</Link></li>
+          </ul>
         </div>
       </div>
     )

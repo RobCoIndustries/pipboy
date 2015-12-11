@@ -12,3 +12,7 @@
   background: #000;
   font-family: Monofonto;
 }
+
+li {
+  display: list-item;
+}
