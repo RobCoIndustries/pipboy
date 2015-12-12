@@ -18,15 +18,29 @@ import Database from '../stores/Database'
 const styles = {
   localMap: {
     display: 'block',
+    position: 'relative',
     height: '100%',
     width: '100%',
     overflow: 'hidden'
   },
   canvas: {
-    background: '#000'
+    background: '#000',
+    height: '100%',
+    width: '100%'
   }
 }
 
+@withStore(dispatcher
+  .reduce(Database)
+  .map(x => generateTreeFromDatabase(x))
+  .filter(x => x && x.Status)
+  .map(x => x.Status.EffectColor)
+  .map(x => {
+    const color = x.map(x => Math.round(x * 255))
+    return `rgb(${color[0]},${color[1]},${color[2]})`
+  })
+  .distinctUntilChanged(),
+  'color')
 @withStore(dispatcher
   .reduce(Database)
   .map(x => generateTreeFromDatabase(x))
@@ -41,21 +55,6 @@ const styles = {
   })
   .distinctUntilChanged(),
   'map')
-@withStore(dispatcher
-  .reduce(Database)
-  .map(x => generateTreeFromDatabase(x))
-  .map(x => x && x.Status.EffectColor)
-  .map(effectColor => {
-    let effectColors = effectColor.map(x => Math.round(x*255) )
-    let effect = {
-      red: effectColors[0],
-      green: effectColors[1],
-      blue: effectColors[2]
-    }
-    return `rgb(${effect.red},${effect.green},${effect.blue})`
-  })
-  .distinctUntilChanged(),
-  'effectColor')
 export default class LocalMap extends React.Component {
   static contextTypes = {
     sendCommand: React.PropTypes.func.isRequired
@@ -71,19 +70,18 @@ export default class LocalMap extends React.Component {
   }
 
   componentDidMount() {
-    this.updateMap(this.props.map, this.props.effectColor)
+    this.updateMap(this.props.map, this.props.color)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.map !== this.props.map) {
-      this.updateMap(nextProps.map, this.props.effectColor)
+      this.updateMap(nextProps.map, this.props.color)
     }
   }
 
-  updateMap = (map, effectColor) => {
+  updateMap = (map, color) => {
     // Get next LocalMap
     this.context.sendCommand('RequestLocalMapSnapshot')
-    const fillStyle = effectColor;
 
     const {
       width,
@@ -108,7 +106,7 @@ export default class LocalMap extends React.Component {
     context.putImageData(image, 0, 0)
     context.globalCompositeOperation = 'multiply'
 
-    context.fillStyle = fillStyle;
+    context.fillStyle = color;
     context.fillRect(0, 0, width, height)
   }
 
@@ -124,7 +122,7 @@ export default class LocalMap extends React.Component {
           orientation={this.props.orientation || 0}
           x={0.5}
           y={0.5}
-          color={this.props.effectColor} />
+          color={this.props.color}/>
       </div>
     )
   }

@@ -1,5 +1,4 @@
 import React from 'react'
-import Radium from 'radium'
 import invariant from 'invariant'
 
 import {
@@ -27,16 +26,26 @@ import {
 } from './constants/server_types'
 
 import dispatcher from './dispatcher'
+import Sidebar from './components/Sidebar'
 
 const styles = {
   app: {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'no-wrap',
+    alignItems: 'stretch',
     height: '100%',
     width: '100%'
+  },
+  content: {
+    display: 'block',
+    flexGrow: '1',
+    padding: 10,
+    width: '100%',
+    height: '100%'
   }
 }
 
-@Radium
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -101,7 +110,8 @@ export default class App extends React.Component {
 
     return (
       <div style={styles.app}>
-        <div>
+        <Sidebar/>
+        <div style={styles.content}>
           {this.props.children}
         </div>
       </div>
