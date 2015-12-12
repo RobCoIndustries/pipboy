@@ -22,11 +22,16 @@ const {
 } = status
 
 import {
-  toType
+  toType,
+  SERVER_LOCALMAP_UPDATE
 } from './constants/server_types'
 
 import dispatcher from './dispatcher'
 import Sidebar from './components/Sidebar'
+
+import {
+  nextLocalMap
+} from './localmap_stream'
 
 const styles = {
   app: {
@@ -77,8 +82,15 @@ export default class App extends React.Component {
         this.cancelHeartbeat = sendPeriodicHeartbeat(socket)
         this.connection = createConnectionSubject(socket)
         this.subscription = this.connection.subscribe(x => {
+          const type = toType(x.type)
+
+          if (type === SERVER_LOCALMAP_UPDATE) {
+            nextLocalMap(x.payload)
+            return
+          }
+
           dispatcher.dispatch({
-            type: toType(x.type),
+            type: type,
             payload: x.payload
           })
         })
@@ -89,9 +101,6 @@ export default class App extends React.Component {
         this.setState({
           connected: true
         })
-
-        // Get initial LocalMap state
-        this.sendCommand('RequestLocalMapSnapshot')
       })
       .catch(err => {
         throw err

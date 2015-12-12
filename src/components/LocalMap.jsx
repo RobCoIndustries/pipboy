@@ -13,6 +13,7 @@ import {
 
 import PlayerArrow from './PlayerArrow'
 import dispatcher from '../dispatcher'
+import localmapStream from '../localmap_stream'
 import Database from '../stores/Database'
 
 const styles = {
@@ -30,9 +31,20 @@ const styles = {
   }
 }
 
-@withStore(dispatcher
+const db = dispatcher
   .reduce(Database)
   .map(x => generateTreeFromDatabase(x))
+
+const position = db
+  .map(x => x && x.Map.World.Player)
+  .distinctUntilChanged()
+  .map(x => ({
+    x: x.X,
+    y: x.Y,
+    deg: x.Rotation || 0
+  }))
+
+@withStore(db
   .filter(x => x && x.Status)
   .map(x => x.Status.EffectColor)
   .map(x => {
@@ -41,73 +53,45 @@ const styles = {
   })
   .distinctUntilChanged(),
   'color')
-@withStore(dispatcher
-  .reduce(Database)
-  .map(x => generateTreeFromDatabase(x))
-  .map(x => x && x.Map.World.Player.Rotation)
-  .distinctUntilChanged(),
-  'orientation')
-@withStore(dispatcher
-  .filter(x => x && x.type === SERVER_LOCALMAP_UPDATE)
-  .map(x => parseBinaryMap(x.payload))
-  .filter(map => {
-    return !map.pixels.equals(new Buffer(map.pixels.length))
-  })
-  .distinctUntilChanged(),
-  'map')
+@withStore(position, 'position')
+@withStore(localmapStream, 'map')
 export default class LocalMap extends React.Component {
   static contextTypes = {
     sendCommand: React.PropTypes.func.isRequired
   }
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      width: props.map.width,
-      height: props.map.height
-    }
+  componentWillMount() {
+    this.context.sendCommand('RequestLocalMapSnapshot')
   }
 
   componentDidMount() {
-    this.updateMap(this.props.map, this.props.color)
+    this.canvas = this.refs.canvas.getContext('2d')
+    this.updateMap(this.props.map)
+
+    this.updater = position
+      .throttle(200)
+      .subscribe(() => {
+        this.context.sendCommand('RequestLocalMapSnapshot')
+      })
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.map !== this.props.map) {
-      this.updateMap(nextProps.map, this.props.color)
+      this.updateMap(nextProps.map)
     }
   }
 
-  updateMap = (map, color) => {
-    // Get next LocalMap
-    this.context.sendCommand('RequestLocalMapSnapshot')
+  updateMap = image => {
+    this.canvas.globalCompositeOperation = 'source-over'
+    this.canvas.putImageData(image, 0, 0)
+    this.canvas.globalCompositeOperation = 'multiply'
 
-    const {
-      width,
-      height,
-      pixels
-    } = map
+    this.canvas.fillStyle = this.props.color
+    this.canvas.fillRect(0, 0, 1920, 1080)
+  }
 
-    const context = this.refs.canvas.getContext('2d')
-    const image = context.createImageData(width, height)
-    const data = image.data
-
-    for (let i = 0; i < pixels.length; i++) {
-      const val = pixels[i]
-      const offset = i * 4
-      data[offset] = val
-      data[offset + 1] = val
-      data[offset + 2] = val
-      data[offset + 3] = 255
-    }
-
-    context.globalCompositeOperation = 'source-over'
-    context.putImageData(image, 0, 0)
-    context.globalCompositeOperation = 'multiply'
-
-    context.fillStyle = color;
-    context.fillRect(0, 0, width, height)
+  componentWillUnmount() {
+    this.updater.dispose()
   }
 
   render() {
@@ -115,14 +99,14 @@ export default class LocalMap extends React.Component {
       <div style={styles.localMap}>
         <canvas
           style={styles.canvas}
-          height={this.state.height}
-          width={this.state.width}
+          height={1080}
+          width={1920}
           ref="canvas"/>
         <PlayerArrow
-          orientation={this.props.orientation || 0}
+          orientation={this.props.position.deg}
+          color={this.props.color}
           x={0.5}
-          y={0.5}
-          color={this.props.color}/>
+          y={0.5}/>
       </div>
     )
   }
