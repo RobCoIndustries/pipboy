@@ -78,7 +78,7 @@ export default class Sidebar extends React.Component {
           <ul>
             <li style={styles.li}>
               <Link
-                to="/map"
+                to="/pipboy/map"
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 Map
@@ -87,7 +87,7 @@ export default class Sidebar extends React.Component {
 
             <li style={styles.li}>
               <Link
-                to="/about"
+                to="/pipboy/about"
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 About
