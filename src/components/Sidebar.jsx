@@ -1,6 +1,8 @@
 import React from 'react'
 import { withStore } from 'fluorine-lib'
 import { Link } from 'react-router'
+//import ipcMain from 'electron'
+const ipcRenderer = require('electron').ipcRenderer;
 
 import {
   decoding
@@ -10,6 +12,10 @@ import Database from '../stores/Database'
 import dispatcher from '../dispatcher'
 
 const { generateTreeFromDatabase } = decoding
+
+var remote = require('remote');
+var BrowserWindow = remote.require('browser-window');
+var win = BrowserWindow.getFocusedWindow();
 
 @withStore(dispatcher
   .reduce(Database)
@@ -28,13 +34,17 @@ const { generateTreeFromDatabase } = decoding
   .distinctUntilChanged(),
   'color')
 export default class Sidebar extends React.Component {
+  handleFullscreen() {
+    win.setFullScreen(!(win.isFullScreen()));
+  }
   render() {
     const styles = {
       container: {
         height: '100%',
         width: 200,
         padding: 10,
-        color: this.props.color
+        color: this.props.color,
+        "-webkit-app-region": "drag"
       },
       sidebar: {
         borderRight: `3px solid ${this.props.color}`,
@@ -45,7 +55,8 @@ export default class Sidebar extends React.Component {
       li: {
         width: '100%',
         marginBottom: 5,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        "-webkit-app-region": "no-drag"
       },
       item: {
         base: {
@@ -81,6 +92,15 @@ export default class Sidebar extends React.Component {
                 style={styles.item.base}>
                 About
               </Link>
+            </li>
+
+            <li style={styles.li}>
+              <span
+                onClick={this.handleFullscreen}
+                activeStyle={styles.item.active}
+                style={styles.item.base}>
+                Fullscreen
+              </span>
             </li>
           </ul>
         </div>

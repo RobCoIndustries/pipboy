@@ -1,6 +1,7 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
 
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
@@ -15,10 +16,9 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({width: 800, height: 600, frame:false, autoHideMenuBar: true, darkTheme: true});
 
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     mainWindow = null;
