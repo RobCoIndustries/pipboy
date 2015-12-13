@@ -126,9 +126,9 @@ class ServerSelection extends React.Component {
 class PipBoy extends React.Component {
   render() {
     return (
-      <div>
+      <div style={styles.app}>
         <Sidebar/>
-        <div>
+        <div style={styles.content}>
           {this.props.children}
         </div>
       </div>
