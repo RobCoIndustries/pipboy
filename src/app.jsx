@@ -7,10 +7,24 @@ import { PropTypes, Router, Route, IndexRoute } from 'react-router';
 import Map from './views/Map';
 import About from './views/About';
 
+import ServerSelection from './views/ServerSelection';
+import PipBoy from './views/PipBoy';
+
 import {
   connection,
   status,
 } from 'pipboylib';
+
+const styles = {
+  app: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'no-wrap',
+    alignItems: 'stretch',
+    height: '100%',
+    width: '100%',
+  },
+};
 
 const {
   discover,
@@ -28,25 +42,6 @@ import {
 } from './constants/server_types';
 
 import dispatcher from './dispatcher';
-import Sidebar from './components/Sidebar';
-
-const styles = {
-  app: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'no-wrap',
-    alignItems: 'stretch',
-    height: '100%',
-    width: '100%',
-  },
-  content: {
-    display: 'block',
-    flexGrow: '1',
-    padding: 10,
-    width: '100%',
-    height: '100%',
-  },
-};
 
 export default class App extends React.Component {
   static displayName = 'PipBoyApp';
@@ -103,50 +98,13 @@ export default class App extends React.Component {
   render() {
     return (
       <div style={styles.app}>
-        <div style={styles.content}>
-          { this.props.children }
-        </div>
+        { this.props.children }
       </div>
     );
   }
 }
 
 App.contextTypes = { history: PropTypes.history };
-
-class ServerSelection extends React.Component {
-  static displayName = 'ServerSelection';
-
-  render() {
-    return (
-      <span>
-        Connecting to first found server...
-      </span>
-    );
-  }
-}
-
-class PipBoy extends React.Component {
-  static displayName = 'PipBoy';
-
-  static propTypes = {
-    children: React.PropTypes.node,
-  }
-
-  static childContextTypes = {
-    sendCommand: React.PropTypes.func.isRequired,
-  }
-
-  render() {
-    return (
-      <div style={styles.app}>
-        <Sidebar/>
-        <div style={styles.content}>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-}
 
 render((
   <Router>
