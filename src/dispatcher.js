@@ -1,5 +1,5 @@
 import {
-  createDispatcher
-} from 'fluorine-lib'
+  createDispatcher,
+} from 'fluorine-lib';
 
-export default createDispatcher()
+export default createDispatcher();
