@@ -4,6 +4,7 @@
   "description": "Experimental pipboy desktop app for Fallout 4",
   "main": "main.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "echo \"Tests are cool, we should do those.\"",
     "start": "electron main.js",
     "build": "npm run build:osx && npm run build:win32 && npm run build:linux",
