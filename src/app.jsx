@@ -1,40 +1,34 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from 'react';
+import { render } from 'react-dom';
 
-import { PropTypes, Router, Route, IndexRoute } from 'react-router'
-
-import invariant from 'invariant'
+import { PropTypes, Router, Route, IndexRoute } from 'react-router';
 
 // Views
-import Map from './views/Map'
-import About from './views/About'
-
-import {
-  Subject
-} from 'rx'
+import Map from './views/Map';
+import About from './views/About';
 
 import {
   connection,
-  status
-} from 'pipboylib'
+  status,
+} from 'pipboylib';
 
 const {
   discover,
   createSocket,
   sendPeriodicHeartbeat,
-  createConnectionSubject
-} = connection
+  createConnectionSubject,
+} = connection;
 
 const {
-  connected
-} = status
+  connected,
+} = status;
 
 import {
-  toType
-} from './constants/server_types'
+  toType,
+} from './constants/server_types';
 
-import dispatcher from './dispatcher'
-import Sidebar from './components/Sidebar'
+import dispatcher from './dispatcher';
+import Sidebar from './components/Sidebar';
 
 const styles = {
   app: {
@@ -43,87 +37,105 @@ const styles = {
     flexWrap: 'no-wrap',
     alignItems: 'stretch',
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   content: {
     display: 'block',
     flexGrow: '1',
     padding: 10,
     width: '100%',
-    height: '100%'
-  }
-}
+    height: '100%',
+  },
+};
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props)
+  static displayName = 'PipBoyApp';
+
+  static propTypes = {
+    children: React.PropTypes.node,
+    history: React.PropTypes.object,
   }
 
   static childContextTypes = {
-    sendCommand: React.PropTypes.func.isRequired
+    sendCommand: React.PropTypes.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   getChildContext = () => ({
-    sendCommand: this.sendCommand
+    sendCommand: this.sendCommand,
   })
 
-  sendCommand = (type, ...args) => {
-    if (this.connection) {
-      this.connection.onNext([type, ...args])
-    }
-  }
-
   componentWillMount() {
-    // TODO: Implement a server selection
     discover()
       .then(server => createSocket(server.info.address))
       .then(socket => {
-        this.cancelHeartbeat = sendPeriodicHeartbeat(socket)
-        this.connection = createConnectionSubject(socket)
+        this.cancelHeartbeat = sendPeriodicHeartbeat(socket);
+        this.connection = createConnectionSubject(socket);
         this.subscription = this.connection.subscribe(x => {
           dispatcher.dispatch({
             type: toType(x.type),
-            payload: x.payload
-          })
-        })
+            payload: x.payload,
+          });
+        });
 
-        return connected(this.connection)
+        return connected(this.connection);
       })
       .then(() => {
-        this.props.history.pushState(null, "/pipboy/about")
+        this.props.history.pushState(null, '/pipboy/about');
 
         // Get initial LocalMap state
-        this.sendCommand('RequestLocalMapSnapshot')
+        this.sendCommand('RequestLocalMapSnapshot');
       })
       .catch(err => {
-        throw err
-      })
+        throw err;
+      });
+  }
+
+  sendCommand = (type, ...args) => {
+    if (this.connection) {
+      this.connection.onNext([type, ...args]);
+    }
   }
 
   render() {
     return (
       <div style={styles.app}>
         <div style={styles.content}>
-          {this.props.children}
+          { this.props.children }
         </div>
       </div>
-    )
+    );
   }
 }
 
 App.contextTypes = { history: PropTypes.history };
 
 class ServerSelection extends React.Component {
+  static displayName = 'ServerSelection';
+
   render() {
     return (
       <span>
         Connecting to first found server...
       </span>
-    )
+    );
   }
 }
 
 class PipBoy extends React.Component {
+  static displayName = 'PipBoy';
+
+  static propTypes = {
+    children: React.PropTypes.node,
+  }
+
+  static childContextTypes = {
+    sendCommand: React.PropTypes.func.isRequired,
+  }
+
   render() {
     return (
       <div style={styles.app}>
@@ -132,18 +144,18 @@ class PipBoy extends React.Component {
           {this.props.children}
         </div>
       </div>
-    )
+    );
   }
 }
 
 render((
   <Router>
-    <Route path="/" component={App}>
+    <Route path='/' component={App}>
       <IndexRoute component={ServerSelection} />
-      <Route path="pipboy" component={PipBoy}>
-        <Route path="map" component={Map}/>
-        <Route path="about" component={About}/>
+      <Route path='pipboy' component={PipBoy}>
+        <Route path='map' component={Map}/>
+        <Route path='about' component={About}/>
       </Route>
     </Route>
   </Router>
-), document.getElementById('app'))
+), document.getElementById('app'));

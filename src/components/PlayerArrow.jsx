@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const styles = {
   arrow: {
@@ -10,7 +10,7 @@ const styles = {
     borderRight: '15px solid transparent',
     borderBottom: '36px solid #000',
     marginLeft: -15,
-    marginTop: -18
+    marginTop: -18,
   },
   inner: {
     position: 'absolute',
@@ -21,34 +21,37 @@ const styles = {
     height: 0,
     borderLeft: '12px solid transparent',
     borderRight: '12px solid transparent',
-    borderBottom: '30px solid #4aff4a'
-  }
-}
+    borderBottom: '30px solid #4aff4a',
+  },
+};
 
 export default class PlayerArrow extends React.Component {
+  static displayName = 'Player Arrow'
+
   static propTypes = {
+    color: React.PropTypes.string,
+    orientation: React.PropTypes.number,
     x: React.PropTypes.number,
     y: React.PropTypes.number,
-    orientation: React.PropTypes.number
-  }
+  };
 
   static defaultProps = {
+    orientation: 0,
     x: 0,
     y: 0,
-    orientation: 0
-  }
+  };
 
   render() {
     return (
       <div style={Object.assign({}, styles.arrow, {
         left: `${this.props.x * 100}%`,
         top: `${this.props.y * 100}%`,
-        transform: `rotate(${this.props.orientation}deg)`
+        transform: `rotate(${this.props.orientation}deg)`,
       })}>
         <div style={Object.assign({}, styles.inner, {
-          borderBottom: `30px solid ${this.props.color}`
+          borderBottom: `30px solid ${this.props.color}`,
         })}/>
       </div>
-    )
+    );
   }
 }
