@@ -67,6 +67,21 @@ export default class App extends React.Component {
     discover()
       .then(server => createSocket(server.info.address))
       .then(socket => {
+        // Redirect to server selection on disconnect (for now).
+        // Since close always follows an emitted 'error' on socket, we'll only
+        // redirect in close.
+        socket.on('close', (hadError) => {
+          if (hadError) {
+            console.error('Connection to Fallout 4 server had an error. Redirecting to server selection screen.');
+          }
+          this.props.history.pushState(null, '/');
+        });
+        socket.on('timeout', () => {
+          console.error('Fallout 4 timed out.');
+          socket.destroy();
+        });
+        socket.setTimeout(2000);
+
         this.cancelHeartbeat = sendPeriodicHeartbeat(socket);
         this.connection = createConnectionSubject(socket);
         this.subscription = this.connection.subscribe(x => {
