@@ -1,3 +1,2 @@
-require('electron-compile').init()
-require('./app.js')
-
+require('electron-compile').init();
+require('./app.js');
