@@ -8,7 +8,7 @@ Experimental Desktop Application for Fallout 4's Pip Boy.
 
 ## Requirements
 
-* Fallout 4 for PS4 or PC (see [pipboylib#27](https://github.com/rgbkrk/pipboylib/issues/27))
+* Fallout 4 for PS4 or PC (see [pipboylib#27](https://github.com/RobCoIndustries/pipboylib/issues/27))
 
 For the moment, you'll need to install this straight from GitHub.
 
