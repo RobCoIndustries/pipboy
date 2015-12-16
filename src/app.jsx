@@ -15,17 +15,6 @@ import {
   status,
 } from 'pipboylib';
 
-const styles = {
-  app: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'no-wrap',
-    alignItems: 'stretch',
-    height: '100%',
-    width: '100%',
-  },
-};
-
 const {
   discover,
   createSocket,
@@ -42,6 +31,17 @@ import {
 } from './constants/server_types';
 
 import dispatcher from './dispatcher';
+
+const styles = {
+  app: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'no-wrap',
+    alignItems: 'stretch',
+    height: '100%',
+    width: '100%',
+  },
+};
 
 export default class App extends React.Component {
   static displayName = 'PipBoyApp';
