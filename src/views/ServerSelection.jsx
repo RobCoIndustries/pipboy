@@ -22,11 +22,15 @@ export default class ServerSelection extends React.Component {
     servers: React.PropTypes.any,
   }
 
+  selectServer(server) {
+    console.log(server);
+  }
+
   render() {
     return (
       (this.props.servers && this.props.servers.length > 0) ?
         <div>{this.props.servers.map(server =>
-          <h1>{server}</h1>
+          <h1 key={server} onClick={this.selectServer.bind(this, server)}>{server}</h1>
         )}</div> :
       <h1>
         Finding servers...
