@@ -48,7 +48,7 @@ export default class Sidebar extends React.Component {
         width: 200,
         padding: 10,
         color: this.props.color,
-        '-webkit-app-region': 'drag',
+        'WebkitAppRegion': 'drag',
       },
       sidebar: {
         borderRight: `3px solid ${this.props.color}`,
@@ -60,7 +60,6 @@ export default class Sidebar extends React.Component {
         width: '100%',
         marginBottom: 5,
         textTransform: 'uppercase',
-        '-webkit-app-region': 'no-drag',
       },
       item: {
         base: {
