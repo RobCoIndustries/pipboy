@@ -72,7 +72,7 @@ export default class PipBoy extends React.Component {
       if (hadError) {
         console.error('Connection to Fallout 4 server had an error. Redirecting to server selection screen.');
       }
-      this.props.history.pushState(null, '/');
+      this.props.history.pushState(null, `/pipboy/${this.props.params.ip}`);
     });
     this.socket.on('timeout', () => {
       console.error('Fallout 4 timed out.');
