@@ -20,11 +20,13 @@ export default class ServerSelection extends React.Component {
 
   static propTypes = {
     history: React.PropTypes.object,
+    onSelection: React.PropTypes.func,
     servers: React.PropTypes.any,
   }
 
   selectServer(server) {
-    this.props.history.pushState(null, `/pipboy/${server}/Map`);
+    this.props.history.pushState(null, `/${server}/Map`);
+    this.props.onSelection && this.props.onSelection(server);
   }
 
   render() {

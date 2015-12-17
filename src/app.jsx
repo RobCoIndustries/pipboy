@@ -43,8 +43,8 @@ App.contextTypes = { history: PropTypes.history };
 render((
   <Router>
     <Route path='/' component={App}>
-      <IndexRoute component={ServerSelection} />
-      <Route path='pipboy/:ip' component={PipBoy}>
+      <IndexRoute component={ServerSelection} onSelection={(server)=>console.log(server)}/>
+      <Route path=':ip' component={PipBoy}>
         <Route path='About' component={About}/>
         <Route path='Map' component={Map}/>
       </Route>
