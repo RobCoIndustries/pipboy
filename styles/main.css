@@ -3,12 +3,17 @@
   src: url(../fonts/monofonto.woff);
 }
 
+body {
+  color: #3f3;
+  background: #000;
+}
+
 #app {
   display: block;
   width: 100%;
   height: 100%;
 
-  color: #fff;
+  color: #3f3;
   background: #000;
   font-family: Monofonto;
 }

@@ -18,10 +18,9 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     frame: false,
-    autoHideMenuBar: true,
     darkTheme: true,
   });
 

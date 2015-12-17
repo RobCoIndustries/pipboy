@@ -40,9 +40,11 @@
     "eslint-plugin-react": "^3.11.3"
   },
   "dependencies": {
+    "color": "^0.10.1",
     "fluorine-lib": "^0.2.0",
     "history": "1.13.1",
     "invariant": "^2.2.0",
+    "normalize.css": "^3.0.3",
     "pipboylib": "^1.1.1",
     "radium": "^0.15.3",
     "react": "^0.14.3",

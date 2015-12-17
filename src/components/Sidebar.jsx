@@ -1,15 +1,16 @@
 import React from 'react';
-import { withStore } from 'fluorine-lib';
 import { Link } from 'react-router';
+
+import { withStore } from 'fluorine-lib';
 
 import {
   decoding,
 } from 'pipboylib';
 
+const { generateTreeFromDatabase } = decoding;
+
 import Database from '../stores/Database';
 import dispatcher from '../dispatcher';
-
-const { generateTreeFromDatabase } = decoding;
 
 const remote = require('remote');
 const BrowserWindow = remote.require('browser-window');
@@ -20,14 +21,9 @@ const win = BrowserWindow.getFocusedWindow();
   .map(x => generateTreeFromDatabase(x))
   .filter(x => x && x.Status)
   .map(x => x.Status.EffectColor)
-  .map(effectColor => {
-    const effectColors = effectColor.map(x => Math.round(x * 255));
-    const effect = {
-      red: effectColors[0],
-      green: effectColors[1],
-      blue: effectColors[2],
-    };
-    return `rgb(${effect.red},${effect.green},${effect.blue})`;
+  .map(x => {
+    const color = x.map(v => Math.round(v * 255));
+    return `rgb(${color[0]},${color[1]},${color[2]})`;
   })
   .distinctUntilChanged(),
   'color')
@@ -35,6 +31,7 @@ export default class Sidebar extends React.Component {
   static displayName = 'Sidebar';
 
   static propTypes = {
+    basepath: React.PropTypes.string,
     color: React.PropTypes.string,
   };
 
@@ -48,7 +45,7 @@ export default class Sidebar extends React.Component {
         width: 200,
         padding: 10,
         color: this.props.color,
-        '-webkit-app-region': 'drag',
+        WebkitAppRegion: 'drag',
       },
       sidebar: {
         borderRight: `3px solid ${this.props.color}`,
@@ -60,7 +57,7 @@ export default class Sidebar extends React.Component {
         width: '100%',
         marginBottom: 5,
         textTransform: 'uppercase',
-        '-webkit-app-region': 'no-drag',
+        WebkitAppRegion: 'no-drag',
       },
       item: {
         base: {
@@ -82,7 +79,7 @@ export default class Sidebar extends React.Component {
           <ul>
             <li style={styles.li}>
               <Link
-                to='/pipboy/map'
+                to={`${this.props.basepath}/map`}
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 Map
@@ -91,7 +88,7 @@ export default class Sidebar extends React.Component {
 
             <li style={styles.li}>
               <Link
-                to='/pipboy/about'
+                to={`${this.props.basepath}/about`}
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 About
