@@ -19,11 +19,12 @@ export default class ServerSelection extends React.Component {
   static displayName = 'ServerSelection';
 
   static propTypes = {
+    history: React.PropTypes.object,
     servers: React.PropTypes.any,
   }
 
   selectServer(server) {
-    console.log(server);
+    this.props.history.pushState(null, `/pipboy/${server}`);
   }
 
   render() {

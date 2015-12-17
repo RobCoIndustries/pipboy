@@ -55,6 +55,7 @@ export default class Sidebar extends React.Component {
         paddingRight: 10,
         height: '100%',
         width: '100%',
+        'WebkitAppRegion': 'no-drag',
       },
       li: {
         width: '100%',
