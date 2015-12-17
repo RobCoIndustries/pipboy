@@ -1,14 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import { withStore } from 'fluorine-lib';
+
+import {
+  decoding,
+} from 'pipboylib';
+
+const { generateTreeFromDatabase } = decoding;
+
+import Database from '../stores/Database';
+import dispatcher from '../dispatcher';
+
 const remote = require('remote');
 const BrowserWindow = remote.require('browser-window');
 const win = BrowserWindow.getFocusedWindow();
 
+@withStore(dispatcher
+  .reduce(Database)
+  .map(x => generateTreeFromDatabase(x))
+  .filter(x => x && x.Status)
+  .map(x => x.Status.EffectColor)
+  .map(x => {
+    const color = x.map(v => Math.round(v * 255));
+    return `rgb(${color[0]},${color[1]},${color[2]})`;
+  })
+  .distinctUntilChanged(),
+  'color')
 export default class Sidebar extends React.Component {
   static displayName = 'Sidebar';
 
   static propTypes = {
+    basepath: React.PropTypes.string,
     color: React.PropTypes.string,
   };
 
@@ -56,7 +79,7 @@ export default class Sidebar extends React.Component {
           <ul>
             <li style={styles.li}>
               <Link
-                to='/pipboy/map'
+                to={`${this.props.basepath}/map`}
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 Map
@@ -65,7 +88,7 @@ export default class Sidebar extends React.Component {
 
             <li style={styles.li}>
               <Link
-                to='/pipboy/about'
+                to={`${this.props.basepath}/about`}
                 activeStyle={styles.item.active}
                 style={styles.item.base}>
                 About

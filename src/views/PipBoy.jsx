@@ -1,13 +1,5 @@
 import React from 'react';
 
-import { withStore } from 'fluorine-lib';
-
-import {
-  decoding,
-} from 'pipboylib';
-
-const { generateTreeFromDatabase } = decoding;
-
 import Sidebar from '../components/Sidebar';
 
 import {
@@ -29,7 +21,6 @@ import {
   toType,
 } from '../constants/server_types';
 
-import Database from '../stores/Database';
 import dispatcher from '../dispatcher';
 
 const styles = {
@@ -50,25 +41,6 @@ const styles = {
   },
 };
 
-/*
-@withStore(dispatcher
-  .reduce(Database)
-  .filter(x => x)
-  .map(x => generateTreeFromDatabase(x))
-  .filter(x => x && x.Status)
-  .map(x => x.Status.EffectColor)
-  .map(effectColor => {
-    const effectColors = effectColor.map(x => Math.round(x * 255));
-    const effect = {
-      red: effectColors[0],
-      green: effectColors[1],
-      blue: effectColors[2],
-    };
-    return `rgb(${effect.red},${effect.green},${effect.blue})`;
-  })
-  .distinctUntilChanged(),
-  'color')
-  */
 export default class PipBoy extends React.Component {
   static displayName = 'PipBoy';
 
@@ -92,7 +64,6 @@ export default class PipBoy extends React.Component {
   })
 
   componentWillMount() {
-    console.log(this.props.params.ip);
     this.socket = createSocket(this.props.params.ip);
     // Redirect to server selection on disconnect (for now).
     // Since close always follows an emitted 'error' on socket, we'll only
@@ -111,6 +82,7 @@ export default class PipBoy extends React.Component {
 
     this.cancelHeartbeat = sendPeriodicHeartbeat(this.socket);
     this.connection = createConnectionSubject(this.socket);
+
     this.subscription = this.connection.subscribe(x => {
       dispatcher.dispatch({
         type: toType(x.type),
@@ -139,10 +111,7 @@ export default class PipBoy extends React.Component {
     return (
       (this.state && this.state.connected) ?
       <div style={styles.app}>
-        <Sidebar color={this.props.color || 'rgb(255,100,100)'}
-                 plugins={React.Children.map(this.props.children, (child) => {
-                   return { name: child.displayName, path: `pipboy/${this.props.params.ip}/${child.displayName}` };
-                 })} />
+        <Sidebar basepath={`/pipboy/${this.props.params.ip}`} />
         <div style={styles.content}>
           {this.props.children}
         </div>

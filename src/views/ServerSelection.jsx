@@ -24,7 +24,7 @@ export default class ServerSelection extends React.Component {
   }
 
   selectServer(server) {
-    this.props.history.pushState(null, `/pipboy/${server}`);
+    this.props.history.pushState(null, `/pipboy/${server}/Map`);
   }
 
   render() {
