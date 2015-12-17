@@ -3,6 +3,11 @@
   src: url(../fonts/monofonto.woff);
 }
 
+body {
+  color: #3f3;
+  background: #000;
+}
+
 #app {
   display: block;
   width: 100%;
