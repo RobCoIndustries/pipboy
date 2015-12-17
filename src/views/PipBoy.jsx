@@ -68,11 +68,16 @@ export default class PipBoy extends React.Component {
     // Redirect to server selection on disconnect (for now).
     // Since close always follows an emitted 'error' on socket, we'll only
     // redirect in close.
+    this.socket.on('error', (error) => {
+      console.error(error);
+    });
     this.socket.on('close', (hadError) => {
       if (hadError) {
         console.error('Connection to Fallout 4 server had an error. Redirecting to server selection screen.');
       }
-      this.props.history.pushState(null, `/${this.props.params.ip}`);
+      this.cancelHeartbeat && this.cancelHeartbeat();
+      this.socket.destroy();
+      this.props.history.pushState(null, `/`);
     });
     this.socket.on('timeout', () => {
       console.error('Fallout 4 timed out.');
@@ -80,7 +85,6 @@ export default class PipBoy extends React.Component {
     });
     this.socket.setTimeout(2000);
 
-    this.cancelHeartbeat = sendPeriodicHeartbeat(this.socket);
     this.connection = createConnectionSubject(this.socket);
 
     this.subscription = this.connection.subscribe(x => {
@@ -90,6 +94,7 @@ export default class PipBoy extends React.Component {
       });
     });
     connected(this.connection).then(() => {
+      this.cancelHeartbeat = sendPeriodicHeartbeat(this.socket);
       // this.props.history.pushState(null, 'map');
       this.setState({ connected: true });
 
