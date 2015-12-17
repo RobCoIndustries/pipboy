@@ -117,7 +117,7 @@ export default class PipBoy extends React.Component {
         </div>
       </div> :
       <div>
-        <p>woo</p>
+        <p>Connecting you to {this.props.params.ip}</p>
       </div>
     );
   }
