@@ -16,13 +16,14 @@ For the moment, you'll need to install this straight from GitHub.
 
 You'll need node 4.x or greater.
 
-```
-git clone https://github.com/RobCoIndustries/pipboy.git
-npm install
+```bash
+$ git clone https://github.com/RobCoIndustries/pipboy.git
+$ cd pipboy
+$ npm install
 ```
 
 ### Running
 
-```
-npm run start
+```bash
+$ npm run start
 ```
