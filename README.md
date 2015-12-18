@@ -4,7 +4,7 @@
 
 Experimental Desktop Application for Fallout 4's Pip Boy.
 
-![localmap view within the pipboy app](https://cloud.githubusercontent.com/assets/2041385/11451663/11faf260-95ce-11e5-90af-5f0eb27602e2.gif)
+![localmap view within the pipboy app](https://cloud.githubusercontent.com/assets/2737108/11907104/8dd9d7da-a5d1-11e5-91de-400307f54a53.gif)
 
 ## Requirements
 
